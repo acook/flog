@@ -238,7 +238,8 @@ class Flog < SexpProcessor
         ruby = file == '-' ? $stdin.read : File.read(file)
         warn "** flogging #{file}" if option[:verbose]
 
-        ast = @parser.process(ruby, file)
+        #ast = @parser.process(ruby, file.gsub!(/(\w+):\s+/, '\1 =>'))
+        ast = @parser.process(ruby.gsub!(/(\w+):\s+/, '\1 =>')), file)
         next unless ast
         mass[file] = ast.mass
         process ast
