@@ -74,6 +74,20 @@ class Flog < SexpProcessor
 
   SCORES.merge!(:inject => 2)
 
+  ##
+  # BASH color strings
+
+  BASH_COLORS = {
+    :red    => "\e[0;31m",
+    :green  => "\e[0;32m",
+    :yellow => "\e[0;33m",
+    :blue   => "\e[0;34m",
+    :purple => "\e[0;35m",
+    :cyan   => "\e[0;36m",
+    :gray   => "\e[0;37m",
+    :reset  => "\e[0m"
+  }
+
   @@no_class  = :main
   @@no_method = :none
 
@@ -403,10 +417,11 @@ class Flog < SexpProcessor
 
   def print_score io, name, score
     location = @method_locations[name]
+    heat = [:blue, :cyan, :green, :yellow][(score/average).to_i] || :red
     if location then
-      io.puts "%8.1f: %-32s %s" % [score, name, location]
+      io.puts "#{BASH_COLORS[heat]}%8.1f#{BASH_COLORS[:reset]}: %-32s #{BASH_COLORS[:gray]}%s#{BASH_COLORS[:reset]}" % [score, name, location]
     else
-      io.puts "%8.1f: %s" % [score, name]
+      io.puts "#{BASH_COLORS[heat]}%8.1f#{BASH_COLORS[:reset]}: %s" % [score, name]
     end
   end
 
