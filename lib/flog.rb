@@ -147,6 +147,7 @@ class Flog < SexpProcessor
     option = {
       :quiet    => true,
       :continue => false,
+      :color    => true
     }
 
     OptionParser.new do |opts|
@@ -162,6 +163,10 @@ class Flog < SexpProcessor
 
       opts.on("-c", "--continue", "Continue despite syntax errors.") do
         option[:continue] = true
+      end
+
+      opts.on("--no-color", "Don't output colors. (for scripts etc.)") do
+        option[:color] = false
       end
 
       opts.on("-d", "--details", "Show method details.") do
@@ -418,11 +423,24 @@ class Flog < SexpProcessor
   def print_score io, name, score
     location = @method_locations[name]
     heat = [:blue, :cyan, :green, :yellow][(score/average).to_i] || :red
+    str = ""
+
     if location then
-      io.puts "#{BASH_COLORS[heat]}%8.1f#{BASH_COLORS[:reset]}: %-32s #{BASH_COLORS[:gray]}%s#{BASH_COLORS[:reset]}" % [score, name, location]
+      str << BASH_COLORS[heat] if option[:color]
+      str << "%8.1f" % score
+      str << BASH_COLORS[:reset] if option[:color]
+      str << ": %-32s " % name
+      str << BASH_COLORS[:gray] if option[:color]
+      str << "%s" % location
+      str << BASH_COLORS[:reset]
     else
-      io.puts "#{BASH_COLORS[heat]}%8.1f#{BASH_COLORS[:reset]}: %s" % [score, name]
+      str << BASH_COLORS[heat] if option[:color]
+      str << "%8.1f" % score
+      str << BASH_COLORS[:reset] if option[:color]
+      str << ": %s" % name
     end
+
+    io.puts str
   end
 
   ##
