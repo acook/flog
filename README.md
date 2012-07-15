@@ -1,8 +1,8 @@
 # flog
 
-- *home* -- http://ruby.sadi.st/
-- *repo* -- https://github.com/seattlerb/flog
-- *rdoc* -- http://seattlerb.rubyforge.org/flog
+- **home**: http://ruby.sadi.st
+- **repo**: https://github.com/seattlerb/flog
+- **rdoc**: http://seattlerb.rubyforge.org/flog
 
 
 ## Description
@@ -14,7 +14,8 @@ report. The higher the score, the more pain the code is in.
 ## Features / Problems
 
 - Easy to read reporting of complexity/pain.
-- Colourised output (by @vrinek; 2a2adb17c14384cc32af195d877ecbfa59211cdf)
+- Colourised output (by
+  [@vrinek](https://github.com/vrinek/flog/commit/f31388220b6143d6a23056a7ab2f5e4c1f130c32))
 
 
 ## Synopsis
