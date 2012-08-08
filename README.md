@@ -1,21 +1,26 @@
-= flog
+# flog
 
-home :: http://ruby.sadi.st/
-repo :: https://github.com/seattlerb/flog
-rdoc :: http://seattlerb.rubyforge.org/flog
+- **home**: http://ruby.sadi.st
+- **repo**: https://github.com/seattlerb/flog
+- **rdoc**: http://seattlerb.rubyforge.org/flog
 
-== DESCRIPTION:
+
+## Description
 
 Flog reports the most tortured code in an easy to read pain
 report. The higher the score, the more pain the code is in.
 
-== FEATURES/PROBLEMS:
 
-* Easy to read reporting of complexity/pain.
+## Features / Problems
 
-== SYNOPSIS:
+- Easy to read reporting of complexity/pain.
+- Colourised output (by
+  [@vrinek](https://github.com/vrinek/flog/commit/f31388220b6143d6a23056a7ab2f5e4c1f130c32))
 
-    % ./bin/flog -g lib
+
+## Synopsis
+
+    % find lib -name \*.rb | xargs flog
     Total Flog = 1097.2 (17.4 flog / method)
     
        323.8: Flog total
@@ -24,16 +29,19 @@ report. The higher the score, the more pain the code is in.
         53.7: Flog#parse_options
     ...
 
-== REQUIREMENTS:
 
-* ruby2ruby (only for -v)
-* ruby_parser
+## Requirements
 
-== INSTALL:
+- ruby2ruby (only for -v)
+- ruby_parser
 
-* sudo gem install flog
 
-== LICENSE:
+## Install
+
+    sudo gem install flog
+
+
+## License
 
 (The MIT License)
 
@@ -57,3 +65,4 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

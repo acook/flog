@@ -74,6 +74,20 @@ class Flog < SexpProcessor
 
   SCORES.merge!(:inject => 2)
 
+  ##
+  # BASH color strings
+
+  BASH_COLORS = {
+    :red    => "\e[0;31m",
+    :green  => "\e[0;32m",
+    :yellow => "\e[0;33m",
+    :blue   => "\e[0;34m",
+    :purple => "\e[0;35m",
+    :cyan   => "\e[0;36m",
+    :gray   => "\e[0;37m",
+    :reset  => "\e[0m"
+  }
+
   @@no_class  = :main
   @@no_method = :none
 
@@ -134,6 +148,7 @@ class Flog < SexpProcessor
       :quiet    => true,
       :continue => false,
       :parser   => RubyParser,
+      :color    => true
     }
 
     OptionParser.new do |opts|
@@ -149,6 +164,10 @@ class Flog < SexpProcessor
 
       opts.on("-c", "--continue", "Continue despite syntax errors.") do
         option[:continue] = true
+      end
+
+      opts.on("--no-color", "Don't output colors. (for scripts etc.)") do
+        option[:color] = false
       end
 
       opts.on("-d", "--details", "Show method details.") do
@@ -254,7 +273,7 @@ class Flog < SexpProcessor
         # TODO: replace File.open to deal with "-"
         ruby = file == '-' ? $stdin.read : File.binread(file)
         warn "** flogging #{file}" if option[:verbose]
-
+        ruby = String === ruby ? ruby.gsub(/(\w+):\s+/, '\1 =>') : ruby
         ast = @parser.process(ruby, file)
         next unless ast
         mass[file] = ast.mass
@@ -412,11 +431,25 @@ class Flog < SexpProcessor
 
   def print_score io, name, score
     location = @method_locations[name]
+    heat = [:blue, :cyan, :green, :yellow][(score/average).to_i] || :red
+    str = ""
+
     if location then
-      io.puts "%8.1f: %-32s %s" % [score, name, location]
+      str << BASH_COLORS[heat] if option[:color]
+      str << "%8.1f" % score
+      str << BASH_COLORS[:reset] if option[:color]
+      str << ": %-32s " % name
+      str << BASH_COLORS[:gray] if option[:color]
+      str << "%s" % location
+      str << BASH_COLORS[:reset]
     else
-      io.puts "%8.1f: %s" % [score, name]
+      str << BASH_COLORS[heat] if option[:color]
+      str << "%8.1f" % score
+      str << BASH_COLORS[:reset] if option[:color]
+      str << ": %s" % name
     end
+
+    io.puts str
   end
 
   ##
