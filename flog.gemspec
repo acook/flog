@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description = "Flog reports the most tortured code in an easy to read pain
 report. The higher the score, the more pain the code is in. "
   s.authors     = [ 'Ryan Davis']
-  s.files = ["README.txt","History.txt","Manifest.txt","Rakefile", "lib/flog.rb", "lib/flog_task.rb", 'lib/gauntlet_flog.rb']
+  s.files = ["README.md","History.txt","Manifest.txt","Rakefile", "lib/flog.rb", "lib/flog_task.rb", 'lib/gauntlet_flog.rb']
   s.test_files = ["test/test_flog.rb"]
 
 end
